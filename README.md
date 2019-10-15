@@ -11,6 +11,22 @@
 # Publish to NPM Registry
 `npm publish`
 
+# Examples:
+Note: All screenshots are of test patient data, NOT real data
+
+### Patient
+![Image of Patient Fhir Resource](images/patient.png)
+### Allergy Intolerance
+![Image of allergyintolerance Fhir Resource](images/AllergyIntolerance.png)
+### Diagnostic Report
+![Image of Patient Fhir Resource](images/DiagnosticReport.png)
+### Encounter
+![Image of Encounter Fhir Resource](images/Encounter.png)
+### Immunization
+![Image of Immunization Fhir Resource](images/Immunization.png)
+### Observation
+![Image of Observation Fhir Resource](images/Observation.png)
+
 # Usage
 
 ### Resources
