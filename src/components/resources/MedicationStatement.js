@@ -20,16 +20,26 @@ class MedicationDetails extends React.Component {
 class MedicationStatement extends React.Component {
   constructor(props) {
     super(props);
+    console.log("med statement resource:", this.props.fhirResource);
+    if(this.props.fhirResource.medicationCodeableConcept.coding) {
+      console.log("medicationCodeableConcept", this.props.fhirResource.medicationCodeableConcept.coding[0]);
+    }
+    if(this.props.fhirResource.dosage) {
+      console.log("dosage instructions", this.props.fhirResource.dosage[0]);
+    }
   }
 
   render() {
     return (
-      <div className='col-xs-8'>
+      <div className='col-xs-12 col-md-6'>
         <ResourceContainer {...this.props} >
           <div style={{width:'100%', display:'inline-block'}}>
             <h4 style={{display: 'inline-block'}}>{`${_.get(this.props.fhirResource, 'medicationCodeableConcept.text') || _.get(this.props.fhirResource, 'medicationCodeableConcept.coding[0].display')}`}</h4>
             &nbsp;({_.get(this.props.fhirResource,'status') || ''}
-            <span className='text-muted'>{typeof _.get(this.props.fhirResource,'status') === 'undefined' ? '' : `, status ${_.get(this.props.fhirResource,'status')} from ${_.get(this.props.fhirResource,'effectivePeriod.start')} to ${_.get(this.props.fhirResource,'effectivePeriod.end')}`}</span>
+            <span className='text-muted'>
+              {typeof _.get(this.props.fhirResource,'status') === 'undefined' ? '' : `, status ${_.get(this.props.fhirResource,'status')}`}
+              {(( typeof _.get(this.props.fhirResource,'effectivePeriod.start') === 'undefined') || (typeof _.get(this.props.fhirResource,'effectivePeriod.end') === 'undefined')) ? '' : `, from ${_.get(this.props.fhirResource,'effectivePeriod.start')} to ${_.get(this.props.fhirResource,'effectivePeriod.end')}`}
+            </span>
             <span>{_.get(this.props.fhirResource,'reported') === true ? ' - self reported' : ''}</span>
             )
           </div>
@@ -51,7 +61,8 @@ class MedicationStatement extends React.Component {
             {this.props.fhirResource.dosage ? this.props.fhirResource.dosage.map(function(dosage){
                 return (
                   <div>
-                    <p> <b>Dosage Instruction:</b> {_.get(dosage, 'text')} </p>
+                    {_.get(dosage, 'text') ? (<p> <b>Dosage Instruction:</b> {_.get(dosage, 'text')} </p>) : ''}
+                    {_.get(dosage, 'quantityQuantity.value') ? (<p> <b>Dosage Instruction:</b> {_.get(dosage, 'quantityQuantity.value')} </p>) : ''}
                     {_.get(dosage, 'additionalInstruction[0].text') ? <p> <b>Additional Instruction:</b> {_.get(dosage, 'additionalInstruction[0].text')} </p> : ''}
                     {_.get(dosage, 'route.coding[0].display') ? <p> <b>Route:</b> {_.get(dosage, 'route.coding[0].display')} </p> : ''}
                 </div>)

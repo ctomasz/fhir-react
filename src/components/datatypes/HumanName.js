@@ -17,7 +17,7 @@ class HumanName extends React.Component {
 			return (
 				<span>
 					<h4 style={{display: 'inline-block'}}>{`${_.get(this.props.fhirData, 'given') || ''} ${_.get(this.props.fhirData, 'family') || ''} ${(_.get(this.props.fhirData, 'suffix') || []).join(' ')}`}</h4>
-					&nbsp;<small>({_.get(this.props.fhirData, 'use')})</small>
+					&nbsp; {_.get(this.props.fhirData, 'use') ? (<small>({_.get(this.props.fhirData, 'use')})</small>) : ''}
 				</span>
 			)
 

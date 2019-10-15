@@ -13,8 +13,10 @@ class PatientContact extends React.Component {
   render() {
 		return (
       <div>
-        <HumanName fhirData={_.get(this.props.fhirData, 'name')} />
-        <small className='text-muted'>{`(${_.get(this.props.fhirData, 'relationship[0].text') || ''})`}</small>
+        {_.get(this.props.fhirData[0],'value') ?
+          <Telecom fhirData={this.props.fhirData[0]} /> : <HumanName fhirData={_.get(this.props.fhirData, 'name')} /> }
+        {_.get(this.props.fhirData[0],'value') ?
+          '' : (<small className='text-muted'>{`(${_.get(this.props.fhirData, 'relationship[0].text') || ''})`}</small>) }
       </div>
     )
   }
@@ -45,28 +47,32 @@ class Patient extends React.Component {
               }.bind(this))}
               <div>
                 {_.get(this.props.fhirResource,'birthDate') ?
-                  <span className='text-muted'><strong>{_.get(this.props.fhirResource,'gender') || ''}, {_.get(this.props.fhirResource,'birthDate') || ''}</strong> <small>(DOB)</small></span> : ''}
+                  <span className='text-muted'><strong>{_.get(this.props.fhirResource,'gender') ? `${_.get(this.props.fhirResource,'gender')},` : ''} {_.get(this.props.fhirResource,'birthDate') || ''}</strong> <small>(DOB)</small></span> : ''}
               </div>
               <div>
+                {_.get(this.props.fhirResource,'identifier[0].value') ?
+                  (<span className='text-muted'>MRN: {_.get(this.props.fhirResource,'identifier[0].value')}</span>) : (<span>ID: {_.get(this.props.fhirResource, 'id')}</span>)}
+              </div>
+              {/* Contact Information */}
+              <div style={{paddingTop:'.5rem'}}>
+                <small className='text-muted'><strong>CONTACT</strong></small>
+                  {(_.get(this.props.fhirResource, 'telecom') || []).map(function(telecom){
+                    if (telecom.system === 'phone') {
+                      return <div><Telecom fhirData={telecom} /></div>
+                    } else if (telecom.system === 'email') {
+                      return <div><Telecom fhirData={telecom} /></div>
+                    }
+                  })}
                 {_.get(this.props.fhirResource,'contact[0]') ?
                   <PatientContact fhirData={_.get(this.props.fhirResource,'contact[0]')}/> : ''}
               </div>
             </div>
           </div>
+          {/* Address Section */}
           <div style={{paddingTop:'.5rem'}}>
             <small className='text-muted'><strong>ADDRESS</strong></small>
             <div>
               <Address fhirData={_.get(this.props.fhirResource, 'address[0]')} />
-            </div>
-          </div>
-          <div style={{paddingTop:'.5rem'}}>
-            <small className='text-muted'><strong>TELEPHONE</strong></small>
-            <div>
-              {(_.get(this.props.fhirResource, 'telecom') || []).map(function(telecom){
-                if (telecom.system === 'phone') {
-                  return <div><Telecom fhirData={telecom} /></div>
-                }
-              })}
             </div>
           </div>
   			</ResourceContainer>

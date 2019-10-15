@@ -15,8 +15,8 @@ class AllergyIntolerance extends React.Component {
   			<ResourceContainer {...this.props}>
           <div style={{width:'100%', display:'inline-block'}}>
             <h4 style={{display: 'inline-block'}}>{_.get(this.props.fhirResource,'substance.coding[0].display') || _.get(this.props.fhirResource,'substance.text') || ''}</h4>
-            &nbsp;({_.get(this.props.fhirResource,'status') || ''}
-            <span className='text-muted'>{typeof _.get(this.props.fhirResource,'recordedDate') === 'undefined' ? '' : `, recorded on ${_.get(this.props.fhirResource,'recordedDate')}`}</span>)
+            &nbsp;{typeof _.get(this.props.fhirResource,'recordedDate') === 'undefined' ? '' : `(${_.get(this.props.fhirResource,'status')}`}
+            <span className='text-muted'>{typeof _.get(this.props.fhirResource,'recordedDate') === 'undefined' ? '' : `, recorded on ${_.get(this.props.fhirResource,'recordedDate')})`}</span>
           </div>
           <div className='container pl-0 pr-0'>
             <div className='row pl-0 pr-0'>
@@ -25,10 +25,12 @@ class AllergyIntolerance extends React.Component {
               </div>
             </div>
             <div className='row pl-0 pr-0'>
+              {typeof _.get(this.props.fhirResource,'reaction') === 'undefined' ? '' :
               <div className='col-12'>
                 <small className='text-muted text-uppercase'><strong>Manifestation</strong></small>
               </div>
-              <br />
+              (<br />)
+                }
               <div className='col-12'>
                 { typeof _.get(this.props.fhirResource,'reaction') === 'undefined' ? '' :
                   (_.get(this.props.fhirResource,'reaction').map(function(reaction){

@@ -14,9 +14,9 @@ class ResourceContainer extends React.Component {
 		return (
       <div>
   			<div className='card bg-light border-0 mb-2'>
-          <div className="card-body">
+          <div className="card-body" style={{paddingRight: '25px'}}>
             {this.props.children}
-            <div style={{position:'absolute', right: '1rem', top: '1rem'}}>
+            <div style={{position:'absolute', right: '16px', top: '1rem'}}>
               <button
                 onClick={() => this.setState({ jsonOpen: !this.state.jsonOpen })}
                 data-target={`${this.props.fhirResource.resourceType}/${this.props.fhirResource.id}`}
