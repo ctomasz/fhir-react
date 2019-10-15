@@ -3,8 +3,6 @@ import React from 'react'
 class Coding extends React.Component {
 	constructor(props) {
     super(props);
-		console.log("Entered props baby");
-		console.log("this.props", this.props);
   }
 
 	render() {

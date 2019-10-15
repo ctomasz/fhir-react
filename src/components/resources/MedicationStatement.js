@@ -20,13 +20,6 @@ class MedicationDetails extends React.Component {
 class MedicationStatement extends React.Component {
   constructor(props) {
     super(props);
-    console.log("med statement resource:", this.props.fhirResource);
-    if(this.props.fhirResource.medicationCodeableConcept.coding) {
-      console.log("medicationCodeableConcept", this.props.fhirResource.medicationCodeableConcept.coding[0]);
-    }
-    if(this.props.fhirResource.dosage) {
-      console.log("dosage instructions", this.props.fhirResource.dosage[0]);
-    }
   }
 
   render() {

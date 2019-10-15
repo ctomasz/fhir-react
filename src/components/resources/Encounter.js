@@ -84,16 +84,6 @@ class Encounter extends React.Component {
     }else{
       participantsComponent = ""
     }
-    let encounterDisplay = ""
-    if(_.get(this.props.fhirResource,'reason')) {
-
-      // console.log("props reason: ", this.props.fhirResource.reason);
-      // this.props.fhirResource.reason.map(function(something){
-      //   console.log("something", something.coding[0].display);
-      //   encounterDisplay += something.coding[0].display;
-      //   encounterDisplay += ', ';
-      // });
-    }
     return (
       <div class="encounter-wrapper">
       <ResourceContainer {...this.props}>
